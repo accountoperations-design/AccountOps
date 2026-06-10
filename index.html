@@ -1299,6 +1299,35 @@ function renderKYB() {
 }
 
 // ====================================================
+// GOOGLE SHEET LOADER
+// ====================================================
+
+let DATA = {};
+
+async function loadSheetData() {
+
+  try {
+
+    const response = await fetch(API_URL);
+
+    const json = await response.json();
+
+    DATA = json;
+
+    document.getElementById("last-updated").innerHTML =
+      "Updated: " +
+      new Date().toLocaleDateString("id-ID");
+
+  } catch(err) {
+
+    console.error(err);
+
+  }
+
+}
+
+
+// ====================================================
 // RENDER ALL
 // ====================================================
 function renderAll() {
@@ -1310,10 +1339,18 @@ function renderAll() {
 }
 
 // ====================================================
+// GOOGLE SHEET API
+// ====================================================
+
+const API_URL =
+"https://script.google.com/macros/s/AKfycbxxxxxxxxxxxxxxxxxxx/exec";
+
+// ====================================================
 // INIT
 // ====================================================
-window.onload = function() {
-  setTimeout(renderAll, 100);
+window.onload = async function () {
+  await loadSheetData();
+  renderAll();
 };
 </script>
 </body>
